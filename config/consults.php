@@ -16,10 +16,10 @@
 			$consult="SELECT ";
 			foreach ($args as $key => $value) {
 				if($key===0){
-					$consult.=$value." ";
+					$consult.=$value."";
 				}
 				else{
-					$consult.=",".$value." ";
+					$consult.=", ".$value." ";
 				}
 				
 			}

@@ -1,0 +1,11 @@
+ErrorDocument 400 http://localhost:81/omr/
+ErrorDocument 403 http://localhost:81/omr/
+ErrorDocument 403 http://localhost:81/omr/
+ErrorDocument 404 http://localhost:81/omr/
+ErrorDocument 500 http://localhost:81/omr/
+Options -Indexes
+IndexIgnore *.php *.html
+RewriteEngine On 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
