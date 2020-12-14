@@ -30,7 +30,7 @@
 		}
 		public function execute(){
 			$this->stmt->execute();
-			echo $this->query;
+			//echo $this->query;
 		}
 		public function fetchArrow(){
 			$user = $this->stmt->fetchAll();

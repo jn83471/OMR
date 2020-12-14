@@ -13,7 +13,7 @@
 		function tabla($patata){
 			$files=json_decode($patata);
 			foreach ($files as $value) {
-				echo $value->nombre;
+				echo $value->nombre.'<br>';
 			}
 		}
 	}
