@@ -7,7 +7,7 @@
 		
 		function __construct()
 		{
-			echo "se a creado el elemento";
+			//echo "se a creado el elemento";
 		}
 	}
 ?>

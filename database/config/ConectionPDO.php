@@ -34,7 +34,7 @@
 		}
 		public function fetchArrow(){
 			$user = $this->stmt->fetchAll();
-			return $user;
+			return json_encode($user);
 		}
 		//'SELECT * FROM users WHERE email = :email AND status=:status'
 		//$stmt->execute(['email' => $email, 'status' => $status]);
