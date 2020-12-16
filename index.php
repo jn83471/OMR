@@ -5,6 +5,8 @@
 	require_once "resources/styles/stylesheetsjon.php";
 	require_once "resources/styles/stylesheetlink.php";
 	require_once "Config/config.php";
+	require_once "database/config/Generator.php";
+	
 
 	$controller="";
 	$url= $_GET['url'] ?? "Index/index";

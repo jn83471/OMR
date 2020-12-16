@@ -9,7 +9,7 @@
 		protected static$pdo;
 		protected $query;
 		protected $stm;
-		public static function Run($typebd)
+		protected static function Run($typebd)
 		{
 			if($typebd==="mysql"){
 				try {
@@ -24,15 +24,20 @@
 			}
 		}
 
-		public function prepareconsult($query){
+		protected function prepareconsult($query){
 			$this->query=$query;
 			$this->stmt = self::$pdo->prepare($query);
 		}
-		public function execute(){
-			$this->stmt->execute();
-			//echo $this->query;
+		protected function execute($params=""){
+			if(is_array($params)){
+				$this->stmt->execute($params);
+			}
+			else{
+				$this->stmt->execute();
+			}
 		}
-		public function fetchArrow(){
+		protected function fetchArrow($params=""){
+			$this->execute($params);
 			$user = $this->stmt->fetchAll();
 			return json_encode($user);
 		}
