@@ -24,9 +24,39 @@
 			}
 		}
 
-		protected function prepareconsult($query){
-			$this->query=$query;
-			$this->stmt = self::$pdo->prepare($query);
+		protected function prepareconsult($query,$args){
+			//echo count($args);
+			if (is_array($args)) {
+				$count=explode("=",$query);
+				if (count($count)>1) {
+					$subquery="";
+					$query=explode("=",$query);
+					//echo count($query);
+					//var_dump($query);
+					//echo $args[0];
+					$c=0;
+					foreach ($query as $key => $value) {
+						$subquery.=$value." ".($args[$c++] ?? '');
+					}
+					//echo $subquery;
+					$this->query=$subquery;
+					echo $subquery;
+					$this->stmt = self::$pdo->prepare($subquery);
+				}
+				else{
+					//echo "string";
+					$this->query=$query;
+					//echo $subquery;
+					$this->stmt = self::$pdo->prepare($query);
+				}
+			}
+			else
+			{
+				$this->query=$query;
+				//echo $subquery;
+				$this->stmt = self::$pdo->prepare($query);
+			}
+			
 		}
 		protected function execute($params=""){
 			if(is_array($params)){

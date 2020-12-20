@@ -1,0 +1,14 @@
+//select
+
+use Ultimate\creator\consults;
+	$atributes=["nombre","email"]; 
+	$operators=creator\arraygeneratorselect(["id"=>1],["nombre"=>"%t%"]);
+	$cons=conects::factory("mysql","user")
+	->select($atributes)
+	->widthAnd("a","b","c")
+	->limit(3);
+	//$cons->consulta();
+	$files=$cons->fetch("=","like");
+	$style->tabla($files,$atributes);
+	//$style->tabla($files,$atributes,"","","");
+	//creator\echos();

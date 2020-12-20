@@ -25,6 +25,9 @@
 			$controllerfunction->{$controller}();
 		}
 	}
+	$fillable=["Index","caca"];
+
+	$isfillable=in_array($controller,$fillable);
 
 	if (isset($url[1])) {
 		$crud=is_numeric($url[1]) ? true : false;
@@ -32,6 +35,8 @@
 	if ($crud) {
 		echo "number";
 	}else{
+		//$rest=$isfillable ? "fillable": "not fillable";
+		//echo $rest;
 		require_once "resources/views/index.php";
 	}
 	

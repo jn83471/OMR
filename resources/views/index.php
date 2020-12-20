@@ -23,12 +23,13 @@
 	<?php
 	use Ultimate\creator\consults;
 	$atributes=["nombre","email"]; 
-	$operators=creator\arraygeneratorselect(["id"=>1],["nombre"=>"casimiro"]);
+	$operators=creator\arraygeneratorselect(["id"=>1],["nombre"=>"%t%"]);
 	$cons=conects::factory("mysql","user")
-	->select($atributes,$operators)
+	->select($atributes)
+	->widthAnd(["id"=>1],["nombre"=>"%o%"])
 	->limit(3);
 	//$cons->consulta();
-	$files=$cons->fetch();
+	$files=$cons->fetch("=","like");
 	$style->tabla($files,$atributes);
 	//$style->tabla($files,$atributes,"","","");
 	//creator\echos();

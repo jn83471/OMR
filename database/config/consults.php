@@ -10,6 +10,7 @@
 		protected static $consult;
 		private $checked=false;
 		private $params="";
+		private $seleccionador=1;
 
 		/*function __construct($type,$table)
 		{
@@ -41,10 +42,9 @@
 					$this->params=[];
 					foreach ($params as $key => $value) {
 						if ($key==="AND" || $key==="OR") {
-							$seleccionador=1;
 							foreach ($value as $keyindex => $values) {
 								if ($key==="OR") {
-									$variblespecial=str_replace("/","", $keyindex)."o".$seleccionador;
+									$variblespecial=str_replace("/","", $keyindex)."o".$this->seleccionador;
 									$this->params=array_merge($this->params,[$variblespecial=>$values]);
 								}
 								else{
@@ -58,13 +58,13 @@
 								}
 								else{
 									if ($key==="OR") {
-										$consult.=" ".$key." ".str_replace("/","", $keyindex)." = :".str_replace("/","", $keyindex)."o".$seleccionador;
+										$consult.=" ".$key." ".str_replace("/","", $keyindex)." = :".str_replace("/","", $keyindex)."o".$this->seleccionador;
 									}
 									else{
 										$consult.=" ".$key." ".$keyindex." = :".$keyindex;
 									}
 								}
-								$seleccionador++;
+								$this->seleccionador++;
 							}
 						}
 						//var_dump($this->params);
@@ -74,6 +74,38 @@
 			
 			self::$consult=$consult;
 			$this->checked=true;
+			return $this;
+		}
+
+		public function innerjoin(array $tables,array $atributos){
+			return $this;
+		}
+
+		public function widthAnd(...$args){
+			$localquery=self::$consult;
+			$this->params=[];
+			//echo $var;
+			//var_dump($args);
+			foreach ($args as $keys => $value) {
+				foreach ($value as $key => $files) {
+					if ($this->seleccionador===1) {
+						$localquery.=" WHERE ".$key." = :".$key;
+						$this->seleccionador++;
+					}
+					else{
+						$localquery.=" AND ".$key." = :".$key;
+					}
+
+					$this->params=array_merge($this->params,[$key=>$files]);
+					
+				}
+			}
+			self::$consult=$localquery;
+			return $this;
+		}
+
+		public function widthOr(...$args){
+			//var_dump($args);
 			return $this;
 		}
 
@@ -89,14 +121,14 @@
 		public function state(){
 			echo $this->state;
 		}
-		public function fetch(){
+		public function fetch(... $args){
 			if(is_array($this->params))
 			{
-				self::prepareconsult(self::$consult,$this->params);
+				self::prepareconsult(self::$consult,$args);
 				return parent::fetchArrow($this->params);
 			}
 			else{
-				self::prepareconsult(self::$consult);
+				self::prepareconsult(self::$consult,$args);
 				return parent::fetchArrow();
 			}
 		}
